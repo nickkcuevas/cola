@@ -1,6 +1,6 @@
 # cola
 
-###How TO:
+### How TO:
 
 #### Compilar todo el código:
     
