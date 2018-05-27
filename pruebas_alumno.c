@@ -55,16 +55,15 @@ void pruebas_cola_volumen() {
 
     cola_t* cola = cola_crear();    
     size_t cant_pilas = 10;
-    void** pilas = malloc(cant_pilas * sizeof(pila_t));
+    pila_t** pilas = malloc(cant_pilas * sizeof(pila_t));
     for (int i=0; i< cant_pilas; i++){
         pila_t* pila = pila_crear();
         pilas[i] = pila;
     }
-    print_test("Cola encolar pila devuelve True", cola_encolar(cola, pilas[0]) == true);
+    print_test("Cola encolar pila devuelve True", cola_encolar(cola, &pilas[0]) == true);
     
-    cola_destruir(cola, &pila_destruir());
+    cola_destruir(cola, &pila_destruir);
     print_test("Se destruyo la Cola", true);
-
 }
 
 
