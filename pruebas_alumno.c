@@ -1,4 +1,5 @@
 #include "cola.h"
+#include "pila.h"
 #include "testing.h"
 #include <stddef.h>
 #include <stdio.h>
@@ -11,7 +12,7 @@
 
 
 /* Pruebas para una cola vacia */
-void pruebas_con_cola_vacia() {
+void pruebas_cola_vacia() {
     printf("INICIO DE PRUEBAS CON COLA VACIA \n");
 
     cola_t* cola = cola_crear();
@@ -50,11 +51,25 @@ void pruebas_cola_pocos_elementos() {
 
 
 void pruebas_cola_volumen() {
+    printf("INICIO DE PRUEBAS COLA VOLUMEN \n");
+
+    cola_t* cola = cola_crear();    
+    size_t cant_pilas = 10;
+    void** pilas = malloc(cant_pilas * sizeof(pila_t));
+    for (int i=0; i< cant_pilas; i++){
+        pila_t* pila = pila_crear();
+        pilas[i] = pila;
+    }
+    print_test("Cola encolar pila devuelve True", cola_encolar(cola, pilas[0]) == true);
+    
+    cola_destruir(cola, &pila_destruir());
+    print_test("Se destruyo la Cola", true);
+
 }
 
 
 void pruebas_cola_alumno() {
-    pruebas_con_cola_vacia();
+    pruebas_cola_vacia();
     printf("------------------\n");
     pruebas_cola_pocos_elementos();
     printf("------------------\n");
