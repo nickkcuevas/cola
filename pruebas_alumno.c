@@ -14,16 +14,38 @@
 void pruebas_con_cola_vacia() {
     printf("INICIO DE PRUEBAS CON COLA VACIA \n");
 
-    /* Declaro las variables a utilizar*/
     cola_t* cola = cola_crear();
 
-    /* Inicio de pruebas */
-    print_test("Creacion de Cola no devuelve vacio", cola != NULL);
-    
+    print_test("Creacion de Cola no devuelve NULL", cola != NULL);
+    print_test("Cola esta vacia devuelve True", cola_esta_vacia(cola) == true);
+    print_test("Cola ver primero devuelve NULL", cola_ver_primero(cola) == NULL);
+    print_test("Cola desencolar devuelve NULL", cola_desencolar(cola) == NULL);
+
+    cola_destruir(cola, NULL);
+    print_test("Se destruyo la Cola", true);
 }
 
 
 void pruebas_cola_pocos_elementos() {
+    printf("INICIO DE PRUEBAS COLA POCOS ELEMENTOS \n");
+
+    cola_t* cola = cola_crear();
+    int elementos[] = {1,2,3};
+    
+    print_test("Cola encolar 1 devuelve True", cola_encolar(cola, &elementos[0]) == true);
+    print_test("Cola encolar 2 devuelve True", cola_encolar(cola, &elementos[1]) == true);
+    print_test("Cola encolar 3 devuelve True", cola_encolar(cola, &elementos[2]) == true);
+    print_test("Cola ver primero devuelve 1", *((int*)cola_ver_primero(cola)) == elementos[0]);
+    print_test("Cola desencolar devuelve 1", *((int*)cola_desencolar(cola)) == elementos[0]);
+    print_test("Cola ver primero devuelve 2", *((int*)cola_ver_primero(cola)) == elementos[1]);
+    print_test("Cola desencolar devuelve 2", *((int*)cola_desencolar(cola)) == elementos[1]);
+    print_test("Cola ver primero devuelve 3", *((int*)cola_ver_primero(cola)) == elementos[2]);
+    print_test("Cola encolar 2 devuelve True", cola_encolar(cola, &elementos[1]) == true);
+    print_test("Cola encolar 1 devuelve True", cola_encolar(cola, &elementos[0]) == true);
+    print_test("Cola ver primero devuelve 3", *((int*)cola_ver_primero(cola)) == elementos[2]);
+    
+    cola_destruir(cola, NULL);
+    print_test("Se destruyo la Cola", true);
 }
 
 
