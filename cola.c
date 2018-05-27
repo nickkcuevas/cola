@@ -64,20 +64,21 @@ bool cola_esta_vacia(const cola_t *cola){
 bool cola_encolar(cola_t *cola, void* valor){
     nodo_t* nodo = nodo_crear(valor);
     if(!nodo) return false;    
+   
     if (cola_esta_vacia(cola)){
         cola->primero = nodo;
         cola->ultimo = nodo;
+        return true;
     }
-    else{
-        if (cola->primero == cola->ultimo){
-            cola->ultimo = nodo;
-            cola->primero->proximo = cola->ultimo;
-        }
-        else{
-            cola->ultimo->proximo = nodo;
-            cola->ultimo = nodo;
-        }
+   
+    if (cola->primero == cola->ultimo){
+        cola->ultimo = nodo;
+        cola->primero->proximo = cola->ultimo;
+        return true;
     }
+
+    cola->ultimo->proximo = nodo;
+    cola->ultimo = nodo;
     return true;
 }
 
