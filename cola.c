@@ -1,5 +1,7 @@
 #include "cola.h"
 #include <stdlib.h>
+struct nodo;
+typedef struct nodo nodo_t;
 
 struct nodo {
     void* dato;
@@ -68,17 +70,16 @@ bool cola_encolar(cola_t *cola, void* valor){
     if (cola_esta_vacia(cola)){
         cola->primero = nodo;
         cola->ultimo = nodo;
-        return true;
     }
    
-    if (cola->primero == cola->ultimo){
+    else if(cola->primero == cola->ultimo){
         cola->ultimo = nodo;
         cola->primero->proximo = cola->ultimo;
-        return true;
     }
-
-    cola->ultimo->proximo = nodo;
-    cola->ultimo = nodo;
+    else{
+        cola->ultimo->proximo = nodo;
+        cola->ultimo = nodo;
+    }
     return true;
 }
 
