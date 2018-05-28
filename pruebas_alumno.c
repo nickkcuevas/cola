@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 size_t CANT_ENCOLAR = 1000;
-size_t CANT_DESENCOLAR = 500;
 
 
 /* *****************************************************************
@@ -81,19 +80,6 @@ void pruebas_cola_volumen() {
     print_test("devuelve True", encolando_ok == true);
     print_test("Cola esta vacia devuelve False", cola_esta_vacia(cola) == false);
 
-    bool desencolando_ok = true;
-    for (int i=0; i< CANT_DESENCOLAR; i++){
-        pila_t* pila = cola_desencolar(cola);
-        if(!pila){
-            desencolando_ok = false;
-        }
-        pila_destruir(pila);
-    }
-    printf("Cola desencolar ");
-    printf("%zd elementos de tipo pila ", CANT_DESENCOLAR);
-    print_test("devuelve True", desencolando_ok == true);
-    print_test("Cola esta vacia devuelve False", cola_esta_vacia(cola) == false);
-    
     cola_destruir(cola, pila_destruir_wrapper);
     free(pilas);
 
