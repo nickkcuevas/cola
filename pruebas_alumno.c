@@ -4,6 +4,17 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+size_t CANT_ENCOLAR = 1000;
+size_t CANT_DESENCOLAR = 500;
+
+
+/* *****************************************************************
+ *                    FUNCIONES AUXILIARES
+ * *****************************************************************/
+
+void pila_destruir_wrapper(void* pila){
+	pila_destruir((pila_t*) pila);
+}
 
 
 // /* ******************************************************************
@@ -54,15 +65,38 @@ void pruebas_cola_volumen() {
     printf("INICIO DE PRUEBAS COLA VOLUMEN \n");
 
     cola_t* cola = cola_crear();    
-    size_t cant_pilas = 10;
-    pila_t** pilas = malloc(cant_pilas * sizeof(pila_t));
-    for (int i=0; i< cant_pilas; i++){
+    pila_t** pilas = malloc(CANT_ENCOLAR * sizeof(pila_t*));
+    for (int i=0; i< CANT_ENCOLAR; i++){
         pila_t* pila = pila_crear();
         pilas[i] = pila;
     }
-    print_test("Cola encolar pila devuelve True", cola_encolar(cola, &pilas[0]) == true);
+    bool encolando_ok = true;
+    for (int i=0; i< CANT_ENCOLAR; i++){
+        if(!cola_encolar(cola, pilas[i])){
+            encolando_ok = false;
+        }
+    }
+    printf("Cola encolar ");
+    printf("%zd elementos de tipo pila ", CANT_ENCOLAR);
+    print_test("devuelve True", encolando_ok == true);
+    print_test("Cola esta vacia devuelve False", cola_esta_vacia(cola) == false);
+
+    bool desencolando_ok = true;
+    for (int i=0; i< CANT_DESENCOLAR; i++){
+        pila_t* pila = cola_desencolar(cola);
+        if(!pila){
+            desencolando_ok = false;
+        }
+        pila_destruir(pila);
+    }
+    printf("Cola desencolar ");
+    printf("%zd elementos de tipo pila ", CANT_DESENCOLAR);
+    print_test("devuelve True", desencolando_ok == true);
+    print_test("Cola esta vacia devuelve False", cola_esta_vacia(cola) == false);
     
-    cola_destruir(cola, &pila_destruir);
+    cola_destruir(cola, pila_destruir_wrapper);
+    free(pilas);
+
     print_test("Se destruyo la Cola", true);
 }
 
